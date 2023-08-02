@@ -12,7 +12,7 @@
 
 // Created by nouhidev
 
-const maxUIDChunkSize = 50;
+const maxUIDChunkSize = 100;
 const API_BASE_URL = "https://ndevapi.com";
 
 const data = {
@@ -55,18 +55,23 @@ async function fetchSpreadSheetData() {
 
   elem.style.width = "50%";
   console.time("Get all Promises");
-  const gameDataResponses = await Promise.all(fetchGameDataPromises);
-  const iconDataResponses = await Promise.all(fetchIconDataPromises);
+  const [gameDataResponses, iconDataResponses] = await Promise.all([
+    Promise.all(fetchGameDataPromises),
+    Promise.all(fetchIconDataPromises)
+  ]);
   console.timeEnd("Get all Promises");
 
-  data.gameData = gameDataResponses.reduce((acc, response) => acc.concat(response), []);
-  data.gameIconData = iconDataResponses.reduce((acc, response) => acc.concat(response), []);
+  data.gameData = gameDataResponses.flat();
+  data.gameIconData = iconDataResponses.flat();
+
+  // data.gameData = gameDataResponses.reduce((acc, response) => acc.concat(response), []);
+  // data.gameIconData = iconDataResponses.reduce((acc, response) => acc.concat(response), []);
 
   console.time("Reduce");
   const gameDataFromAPI = data.gameData.reduce((result, item) => {
     return [...result, ...item["data"]];
   }, []);
-  
+
   const gameIconDataFromAPI = data.gameIconData.reduce((result, item) => {
     return [...result, ...item["data"]];
   }, []);
