@@ -59,13 +59,19 @@ async function fetchSpreadSheetData() {
   const gameDataResponses = await Promise.all(fetchGameDataPromises);
   const iconDataResponses = await Promise.all(fetchIconDataPromises);
 
-  console.log(gameDataResponses);
 
   data.gameData = gameDataResponses.reduce((acc, response) => acc.concat(response), []);
   data.gameIconData = iconDataResponses.reduce((acc, response) => acc.concat(response), []);
 
-  const gameDataFromAPI = [...data.gameData[0]["data"], ...data.gameData[1]["data"], ...data.gameData[2]["data"]];
-  const gameIconDataFromAPI = [...data.gameIconData[0]["data"], ...data.gameIconData[1]["data"], ...data.gameIconData[2]["data"]];
+  const gameDataFromAPI = data.gameData.reduce((result, item) => {
+    return [...result, ...item["data"]];
+  }, []);
+  
+  const gameIconDataFromAPI = data.gameIconData.reduce((result, item) => {
+    return [...result, ...item["data"]];
+  }, []);
+  
+  console.log(gameDataFromAPI);
 
   for (let i = 0; i < gameUIDS.length; i++) {
     var genreArray = data.spreadSheetData[i].Genre.split(", ");
