@@ -1,1 +1,0 @@
-fetch("http://18.196.213.170:8080/game-info/1686885941/").then(response=>response.json()).then(response=>console.log(JSON.stringify(response)));
