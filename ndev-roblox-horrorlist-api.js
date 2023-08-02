@@ -21,6 +21,9 @@ const data = {
   gameIconData: [],
 };
 
+const CACHE_PREFIX = "gameDataCache_";
+const CACHE_EXPIRATION = 300000; // 5 minutes
+
 const dataCache = new Map();
 
 window.onload = function () {
@@ -29,24 +32,44 @@ window.onload = function () {
   $('header').hide();
 };
 
-// Function to fetch data from cache or API with caching
-async function fetchDataWithCaching(endpoint, cacheKey, maxCacheAge) {
-  if (dataCache.has(cacheKey)) {
-    const cachedData = dataCache.get(cacheKey);
-    if (Date.now() - cachedData.timestamp < maxCacheAge) {
-      console.log('Fetching from cache:', cacheKey);
-      return cachedData.data;
+function initializeCache() {
+  // Load cached data from local storage
+  for (let key in localStorage) {
+    if (key.startsWith(CACHE_PREFIX)) {
+      const cacheKey = key.substring(CACHE_PREFIX.length);
+      const cacheData = JSON.parse(localStorage.getItem(key));
+      if (cacheData && Date.now() - cacheData.timestamp < CACHE_EXPIRATION) {
+        dataCache.set(cacheKey, cacheData.data);
+      } else {
+        // Remove expired cache data
+        localStorage.removeItem(key);
+      }
     }
+  }
+}
+
+function saveToCache(cacheKey, data) {
+  dataCache.set(cacheKey, data);
+  const cacheData = { data, timestamp: Date.now() };
+  localStorage.setItem(CACHE_PREFIX + cacheKey, JSON.stringify(cacheData));
+}
+
+async function fetchDataWithCaching(endpoint, cacheKey) {
+  if (dataCache.has(cacheKey)) {
+    console.log('Fetching from cache:', cacheKey);
+    return dataCache.get(cacheKey);
   }
 
   console.log('Fetching from API:', endpoint);
   const response = await fetch(endpoint);
   const freshData = await response.json();
-  dataCache.set(cacheKey, { data: freshData, timestamp: Date.now() });
+  saveToCache(cacheKey, freshData);
   return freshData;
 }
 
+
 async function fetchSpreadSheetData() {
+  initializeCache();
   const table = document.getElementById("table-to-populate");
   const elem = document.getElementById("myBar");
 
