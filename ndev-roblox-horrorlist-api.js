@@ -45,30 +45,23 @@ async function fetchSpreadSheetData() {
     chunks.push(gameUIDS.slice(i, i + maxUIDChunkSize));
   }
 
-  console.time("Get Game Batch 1");
-  const _response = await fetch(`${API_BASE_URL}/game-info/${chunks[0].join(",")}`).then((response) => response.json());
-  console.log(_response)
-  console.timeEnd("Get Game Batch 1");
+  const fetchGameDataPromises = chunks.map((chunk) =>
+    fetch(`${API_BASE_URL}/game-info/${chunk.join(",")}`).then((response) => response.json())
+  );
 
-  return;
+  const fetchIconDataPromises = chunks.map((chunk) =>
+    fetch(`${API_BASE_URL}/game-icon/${chunk.join(",")}`).then((response) => response.json())
+  );
 
-  // const fetchGameDataPromises = chunks.map((chunk) =>
-  //   fetch(`${API_BASE_URL}/game-info/${chunk.join(",")}`).then((response) => response.json())
-  // );
+  elem.style.width = "50%";
+  const gameDataResponses = await Promise.all(fetchGameDataPromises);
+  const iconDataResponses = await Promise.all(fetchIconDataPromises);
 
-  // const fetchIconDataPromises = chunks.map((chunk) =>
-  //   fetch(`${API_BASE_URL}/game-icon/${chunk.join(",")}`).then((response) => response.json())
-  // );
+  data.gameData = gameDataResponses.reduce((acc, response) => acc.concat(response), []);
+  data.gameIconData = iconDataResponses.reduce((acc, response) => acc.concat(response), []);
 
-  // elem.style.width = "50%";
-  // const gameDataResponses = await Promise.all(fetchGameDataPromises);
-  // const iconDataResponses = await Promise.all(fetchIconDataPromises);
-
-  // data.gameData = gameDataResponses.reduce((acc, response) => acc.concat(response), []);
-  // data.gameIconData = iconDataResponses.reduce((acc, response) => acc.concat(response), []);
-
-  // const gameDataFromAPI = [...data.gameData[0]["data"], ...data.gameData[1]["data"], ...data.gameData[2]["data"]];
-  // const gameIconDataFromAPI = [...data.gameIconData[0]["data"], ...data.gameIconData[1]["data"], ...data.gameIconData[2]["data"]];
+  const gameDataFromAPI = [...data.gameData[0]["data"], ...data.gameData[1]["data"], ...data.gameData[2]["data"]];
+  const gameIconDataFromAPI = [...data.gameIconData[0]["data"], ...data.gameIconData[1]["data"], ...data.gameIconData[2]["data"]];
 
   for (let i = 0; i < gameUIDS.length; i++) {
     var genreArray = data.spreadSheetData[i].Genre.split(", ");
