@@ -12,7 +12,7 @@
 
 // Created by nouhidev
 
-const maxUIDChunkSize = 10;
+const maxUIDChunkSize = 50;
 const API_BASE_URL = "https://ndevapi.com";
 
 const data = {
