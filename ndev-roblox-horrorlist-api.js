@@ -48,6 +48,7 @@ async function fetchSpreadSheetData() {
   const _response = await fetch(`${API_BASE_URL}/game-info/${chunks[0].join(",")}`).then((response) => response.json());
   console.log(_response)
 
+  
   // const fetchGameDataPromises = chunks.map((chunk) =>
   //   fetch(`${API_BASE_URL}/game-info/${chunk.join(",")}`).then((response) => response.json())
   // );
