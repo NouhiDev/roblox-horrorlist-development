@@ -154,7 +154,6 @@ function delay(time) {
   return new Promise((resolve) => setTimeout(resolve, time));
 }
 
-
 function toolTipContent(spreadSheetData, apiGameData, apiGameIconData, i, genreHTMLText) {
   const formatter = Intl.NumberFormat('en', { notation: 'compact' });
   var desc = "";
