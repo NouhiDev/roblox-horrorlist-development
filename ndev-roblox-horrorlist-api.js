@@ -45,30 +45,28 @@ async function fetchSpreadSheetData() {
     chunks.push(gameUIDS.slice(i, i + maxUIDChunkSize));
   }
 
-  const fetchGameDataPromises = chunks.map((chunk) =>
-    fetch(`${API_BASE_URL}/game-info/${chunk.join(",")}`).then((response) => response.json())
-  );
+  const _response = await fetch(`${API_BASE_URL}/game-info/${chunks[0].join(",")}`).then((response) => response.json());
+  console.log(_response)
 
-  const fetchIconDataPromises = chunks.map((chunk) =>
-    fetch(`${API_BASE_URL}/game-icon/${chunk.join(",")}`).then((response) => response.json())
-  );
+  // const fetchGameDataPromises = chunks.map((chunk) =>
+  //   fetch(`${API_BASE_URL}/game-info/${chunk.join(",")}`).then((response) => response.json())
+  // );
 
-  elem.style.width = "50%";
-  const gameDataResponses = await Promise.all(fetchGameDataPromises);
-  const iconDataResponses = await Promise.all(fetchIconDataPromises);
+  // const fetchIconDataPromises = chunks.map((chunk) =>
+  //   fetch(`${API_BASE_URL}/game-icon/${chunk.join(",")}`).then((response) => response.json())
+  // );
 
-  data.gameData = gameDataResponses.reduce((acc, response) => acc.concat(response), []);
-  data.gameIconData = iconDataResponses.reduce((acc, response) => acc.concat(response), []);
+  // elem.style.width = "50%";
+  // const gameDataResponses = await Promise.all(fetchGameDataPromises);
+  // const iconDataResponses = await Promise.all(fetchIconDataPromises);
 
-  const gameDataFromAPI = [...data.gameData[0]["data"], ...data.gameData[1]["data"], ...data.gameData[2]["data"]];
-  const gameIconDataFromAPI = [...data.gameIconData[0]["data"], ...data.gameIconData[1]["data"], ...data.gameIconData[2]["data"]];
+  // data.gameData = gameDataResponses.reduce((acc, response) => acc.concat(response), []);
+  // data.gameIconData = iconDataResponses.reduce((acc, response) => acc.concat(response), []);
+
+  // const gameDataFromAPI = [...data.gameData[0]["data"], ...data.gameData[1]["data"], ...data.gameData[2]["data"]];
+  // const gameIconDataFromAPI = [...data.gameIconData[0]["data"], ...data.gameIconData[1]["data"], ...data.gameIconData[2]["data"]];
 
   for (let i = 0; i < gameUIDS.length; i++) {
-
-    if (data.spreadSheetData[i].YouTubeURL != undefined) {
-      // TODO: Add YouTube Roblox Horrorlist URL Functionality
-    }
-
     var genreArray = data.spreadSheetData[i].Genre.split(", ");
     var genreHTMLText = genreHTML(genreArray);
     var gameURL = "https://www.roblox.com/games/" + gameDataFromAPI[i].rootPlaceId;
