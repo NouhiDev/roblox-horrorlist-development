@@ -72,6 +72,7 @@ async function fetchSpreadSheetData() {
   }, []);
   console.timeEnd("Reduce");
 
+  console.time("Add Data to Table");
   for (let i = 0; i < gameUIDS.length; i++) {
     var genreArray = data.spreadSheetData[i].Genre.split(", ");
     var genreHTMLText = genreHTML(genreArray);
@@ -95,6 +96,7 @@ async function fetchSpreadSheetData() {
 
     table.innerHTML += row;
   }
+  console.timeEnd("Add Data to Table");
 
   elem.style.width = "100%";
 
