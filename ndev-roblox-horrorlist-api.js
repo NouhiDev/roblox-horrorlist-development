@@ -45,8 +45,6 @@ async function fetchSpreadSheetData() {
     chunks.push(gameUIDS.slice(i, i + maxUIDChunkSize));
   }
 
-  console.log(chunks);
-
   const fetchGameDataPromises = chunks.map((chunk) =>
     fetch(`${API_BASE_URL}/game-info/${chunk.join(",")}`).then((response) => response.json())
   );
@@ -56,13 +54,15 @@ async function fetchSpreadSheetData() {
   );
 
   elem.style.width = "50%";
+  console.time("Get all Promises");
   const gameDataResponses = await Promise.all(fetchGameDataPromises);
   const iconDataResponses = await Promise.all(fetchIconDataPromises);
-
+  console.timeEnd("Get all Promises");
 
   data.gameData = gameDataResponses.reduce((acc, response) => acc.concat(response), []);
   data.gameIconData = iconDataResponses.reduce((acc, response) => acc.concat(response), []);
 
+  console.time("Reduce");
   const gameDataFromAPI = data.gameData.reduce((result, item) => {
     return [...result, ...item["data"]];
   }, []);
@@ -70,8 +70,7 @@ async function fetchSpreadSheetData() {
   const gameIconDataFromAPI = data.gameIconData.reduce((result, item) => {
     return [...result, ...item["data"]];
   }, []);
-  
-  console.log(gameDataFromAPI);
+  console.timeEnd("Reduce");
 
   for (let i = 0; i < gameUIDS.length; i++) {
     var genreArray = data.spreadSheetData[i].Genre.split(", ");
