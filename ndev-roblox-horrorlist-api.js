@@ -21,11 +21,30 @@ const data = {
   gameIconData: [],
 };
 
+const dataCache = new Map();
+
 window.onload = function () {
   usageDisplay();
-  fetchSpreadSheetData()
+  fetchSpreadSheetData();
   $('header').hide();
 };
+
+// Function to fetch data from cache or API with caching
+async function fetchDataWithCaching(endpoint, cacheKey, maxCacheAge) {
+  if (dataCache.has(cacheKey)) {
+    const cachedData = dataCache.get(cacheKey);
+    if (Date.now() - cachedData.timestamp < maxCacheAge) {
+      console.log('Fetching from cache:', cacheKey);
+      return cachedData.data;
+    }
+  }
+
+  console.log('Fetching from API:', endpoint);
+  const response = await fetch(endpoint);
+  const freshData = await response.json();
+  dataCache.set(cacheKey, { data: freshData, timestamp: Date.now() });
+  return freshData;
+}
 
 async function fetchSpreadSheetData() {
   const table = document.getElementById("table-to-populate");
@@ -37,7 +56,7 @@ async function fetchSpreadSheetData() {
   data.spreadSheetData = await spreadSheetDataResponse.json();
 
   const gameUIDS = data.spreadSheetData
-    .filter((entry, index) => entry.Ambience !== "")
+    .filter((entry) => entry.Ambience !== "")
     .map((entry) => entry.UID);
 
   const chunks = [];
@@ -46,26 +65,23 @@ async function fetchSpreadSheetData() {
   }
 
   const fetchGameDataPromises = chunks.map((chunk) =>
-    fetch(`${API_BASE_URL}/game-info/${chunk.join(",")}`).then((response) => response.json())
+    fetchDataWithCaching(`${API_BASE_URL}/game-info/${chunk.join(",")}`, `gameData_${chunk.join(",")}`, 300000)
   );
 
   const fetchIconDataPromises = chunks.map((chunk) =>
-    fetch(`${API_BASE_URL}/game-icon/${chunk.join(",")}`).then((response) => response.json())
+    fetchDataWithCaching(`${API_BASE_URL}/game-icon/${chunk.join(",")}`, `gameIconData_${chunk.join(",")}`, 300000)
   );
 
   elem.style.width = "50%";
   console.time("Get all Promises");
   const [gameDataResponses, iconDataResponses] = await Promise.all([
     Promise.all(fetchGameDataPromises),
-    Promise.all(fetchIconDataPromises)
+    Promise.all(fetchIconDataPromises),
   ]);
   console.timeEnd("Get all Promises");
 
   data.gameData = gameDataResponses.flat();
   data.gameIconData = iconDataResponses.flat();
-
-  // data.gameData = gameDataResponses.reduce((acc, response) => acc.concat(response), []);
-  // data.gameIconData = iconDataResponses.reduce((acc, response) => acc.concat(response), []);
 
   console.time("Reduce");
   const gameDataFromAPI = data.gameData.reduce((result, item) => {
