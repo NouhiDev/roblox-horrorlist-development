@@ -45,6 +45,8 @@ async function fetchSpreadSheetData() {
     chunks.push(gameUIDS.slice(i, i + maxUIDChunkSize));
   }
 
+  console.log(chunks);
+
   const fetchGameDataPromises = chunks.map((chunk) =>
     fetch(`${API_BASE_URL}/game-info/${chunk.join(",")}`).then((response) => response.json())
   );
@@ -56,6 +58,8 @@ async function fetchSpreadSheetData() {
   elem.style.width = "50%";
   const gameDataResponses = await Promise.all(fetchGameDataPromises);
   const iconDataResponses = await Promise.all(fetchIconDataPromises);
+
+  console.log(gameDataResponses);
 
   data.gameData = gameDataResponses.reduce((acc, response) => acc.concat(response), []);
   data.gameIconData = iconDataResponses.reduce((acc, response) => acc.concat(response), []);
