@@ -12,7 +12,7 @@
 
 // Created by nouhidev
 
-const maxUIDChunkSize = 100;
+const maxUIDChunkSize = 50;
 const API_BASE_URL = "https://ndevapi.com";
 
 const data = {
@@ -78,6 +78,8 @@ async function fetchSpreadSheetData() {
   console.timeEnd("Reduce");
 
   console.time("Add Data to Table");
+  const fragment = document.createDocumentFragment();
+
   for (let i = 0; i < gameUIDS.length; i++) {
     var genreArray = data.spreadSheetData[i].Genre.split(", ");
     var genreHTMLText = genreHTML(genreArray);
@@ -99,8 +101,12 @@ async function fetchSpreadSheetData() {
           <td data-th="Rating" class="align-left">${data.spreadSheetData[i].Rating}</td>
           </tr>`;
 
-    table.innerHTML += row;
+    const rowElement = document.createElement('tr');
+    rowElement.innerHTML = row;
+    fragment.appendChild(rowElement);
   }
+  table.appendChild(fragment);
+
   console.timeEnd("Add Data to Table");
 
   elem.style.width = "100%";
