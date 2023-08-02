@@ -45,10 +45,13 @@ async function fetchSpreadSheetData() {
     chunks.push(gameUIDS.slice(i, i + maxUIDChunkSize));
   }
 
+  console.time("Get Game Batch 1");
   const _response = await fetch(`${API_BASE_URL}/game-info/${chunks[0].join(",")}`).then((response) => response.json());
   console.log(_response)
+  console.timeEnd("Get Game Batch 1");
 
-  
+  return;
+
   // const fetchGameDataPromises = chunks.map((chunk) =>
   //   fetch(`${API_BASE_URL}/game-info/${chunk.join(",")}`).then((response) => response.json())
   // );
