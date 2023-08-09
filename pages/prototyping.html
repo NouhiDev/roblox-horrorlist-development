@@ -27,7 +27,7 @@
 
   <link rel="icon" type="image/x-icon" href="https://nouhi.dev/assets/images/rhl-favicon.ico" />
 
-  <link rel="stylesheet" href="./styles/style.css" />
+  <link rel="stylesheet" href="../styles/style.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"
     integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ=="
     crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -36,7 +36,7 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
   <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
   <script src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js"></script>
-  <script src="ndev-roblox-horrorlist-api.js"></script>
+  <script src="../scripts/ndev-roblox-horrorlist-prototyping.js"></script>
 
   <!-- ONLY UNCOMMENT IN CASE OF API FAILURE -->
   <!-- <script src="scripts/ndev-roblox-horrorlist-emergency.js"></script> -->
@@ -70,7 +70,7 @@
   <h1 class="tit">Roblox Horrorlist</h1>
 
   <!-- Maintenance -->
-  <h1 style="color: rgb(89, 222, 252); font-size: 20px; text-align: center;">This website and its ratings are still a work in progress; nothing is final.</h1>
+  <!--h1 style="color: rgb(252, 89, 89); font-size: 20px; text-align: center;">The Roblox Horrorlist is currently undergoing scheduled maintenance. We will be back shortly.</h1-->
 
   <h1 class="tit-credits">
     <span class="tit-tit-sub">As decided by</span> <a href="pages/contributors.html">Nouhi; Namlit; Torch i.a.</a>
@@ -87,13 +87,12 @@
       <i class="fas fa-chart-line"></i> Statistics
     </button>
     <button class="statistics-button" onclick="rating_scale()">
-      <i class="fas fa-file-signature"></i> How We Rate
+      <i class="fas fa-file-signature"></i> Rating Scale
     </button>
     <button class="donate-button" onclick="donate()">
       <i class="fas fa-heart"></i> Donate
     </button>
   </div>
-  
   <br>
 
   <script>
@@ -114,7 +113,7 @@
     }
 
     function donate() {
-      window.open("https://www.buymeacoffee.com/robloxhorrorlist", "_blank");
+      window.open("https://gofund.me/1aeef99b", "_blank");
     }
   </script>
 

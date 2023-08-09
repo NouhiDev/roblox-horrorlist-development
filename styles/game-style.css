@@ -1,0 +1,345 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300&display=swap");
+
+* {
+    box-sizing: border-box;
+    font-family: "Inter", sans-serif;
+}
+
+body {
+    width: 100%;
+    min-height: 100%;
+    background-color: #161920;
+    overflow-x: hidden;
+}
+
+.backbtn {
+    background-color: #161920;
+    color: white;
+    padding: 10px 30px 10px 30px;
+    border-color: #fff;
+    border-width: 1px;
+    border-style: solid;
+    border-radius: 20px;
+    text-decoration: none;
+}
+
+.backbtn:hover {
+    background-color: #fff;
+    color: #161920;
+    padding: 10px 30px 10px 30px;
+    border-color: #fff;
+    border-width: 1px;
+    border-style: solid;
+    border-radius: 20px;
+    text-decoration: none;
+}
+
+#game-creator {
+    font-size: 30px;
+    color: gray;
+    padding-bottom: 15px;
+}
+
+#game-genres {
+    font-size: 15px;
+    color: rgb(71, 71, 71);
+}
+
+#game-title {
+    text-align: center;
+    color: white;
+    padding: 0px;
+    font-size: 4dvh;
+}
+
+#game-creator {
+    text-align: center;
+}
+
+#game-genres {
+    text-align: center;
+    color: #fff;
+}
+
+.ratings-container {
+    max-width: 500px;
+    background: #262d3a;
+    padding: 10px 20px;
+    border-radius: 7px;
+    margin: auto;
+    width: 50%;
+    display: inline-block;
+    color: #fff;
+}
+
+.ratings-container .rating-box {
+    width: 100%;
+    margin: 15px 0;
+}
+
+.rating-box .title {
+    display: block;
+    font-size: 14px;
+    font-weight: 600;
+    color: #fff;
+    text-align: left;
+}
+
+.rating-box .rating-bar {
+    height: 8px;
+    width: 100%;
+    border-radius: 6px;
+    margin-top: 6px;
+    background: rgba(0, 0, 0, 0.1);
+}
+
+.rating-bar .rating-per {
+    position: relative;
+    display: block;
+    height: 100%;
+    width: 90%;
+    border-radius: 6px;
+    background: #4070f4;
+    opacity: 0;
+}
+
+@keyframes progress {
+    0% {
+        width: 0;
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+.rating-per .tooltip {
+    position: absolute;
+    right: -14px;
+    top: -28px;
+    font-size: 9px;
+    font-weight: 500;
+    color: #fff;
+    padding: 2px 6px;
+    border-radius: 3px;
+    background: #4070f4;
+    z-index: 1;
+}
+
+.tooltip::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: -2px;
+    height: 10px;
+    width: 10px;
+    z-index: -1;
+    background-color: #4070f4;
+    transform: translateX(-50%) rotate(45deg);
+}
+
+.information-container {
+    max-width: 500px;
+    background: #262d3a;
+    padding: 10px 20px;
+    border-radius: 7px;
+    margin: auto;
+    width: 50%;
+    display: inline-block;
+    margin-left: 25px;
+    color: #fff;
+}
+
+#container {
+    text-align: center;
+    width: 100%;
+    display: flex;
+    margin: auto;
+}
+
+.sml-text {
+    font-size: 15px;
+    color: #fff;
+    font-weight: normal;
+}
+
+.note-container {
+    max-width: 500px;
+    color: #fff;
+    background: #262d3a;
+    padding: 10px 20px;
+    border-radius: 7px;
+    margin: auto;
+    width: 50%;
+    display: inline-block;
+    margin-left: 25px;
+}
+
+.rater-note-txt {
+    font-size: 20px;
+}
+
+.overall .tooltip::before {
+    background: rgb(255, 132, 0);
+}
+
+.originalBtn {
+    border-color: #4070f4;
+    border-width: 1px;
+    border-style: solid;
+    padding: 5px 10px 5px 10px;
+    border-radius: 15px;
+    color: white;
+    text-decoration: none;
+    opacity: 0;
+}
+
+.originalBtn:hover {
+    background: #4070f4;
+}
+
+.playbtn {
+    margin-left: 10px;
+    background-color: #161920;
+    color: rgb(255, 132, 0);
+    padding: 10px 30px 10px 30px;
+    border-color: rgb(255, 132, 0);
+    border-width: 1px;
+    border-style: solid;
+    border-radius: 20px;
+    text-decoration: none;
+}
+
+.playbtn:hover {
+    background-color: rgb(255, 132, 0);
+    color: #161920;
+    padding: 10px 30px 10px 30px;
+    border-color: rgb(255, 132, 0);
+    border-width: 1px;
+    border-style: solid;
+    border-radius: 20px;
+    text-decoration: none;
+}
+
+.alert {
+    text-align: center;
+    color: red;
+    font-size: 20px;
+}
+
+.select-dropdown,
+.select-dropdown * {
+    margin: 0;
+    padding: 5px 10px 5px 10px;
+    position: relative;
+    box-sizing: border-box;
+    background: #161920;
+    color:white;
+    border-style: solid;
+    border-color: #4070f4;
+    border-width: 1px;
+}
+
+.select-dropdown {
+    position: relative;
+    background-color: #4070f4;
+    border-radius: 4px;
+}
+
+.select-dropdown select {
+    font-size: 1rem;
+    font-weight: normal;
+    max-width: 100%;
+    padding: 8px 24px 8px 10px;
+    border: none;
+    background-color: transparent;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+
+.select-dropdown select:active,
+.select-dropdown select:focus {
+    outline: none;
+    box-shadow: none;
+}
+
+.select-dropdown:after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    right: 8px;
+    width: 0;
+    height: 0;
+    margin-top: -2px;
+    border-top: 5px solid #4070f4;
+    border-right: 5px solid transparent;
+    border-left: 5px solid transparent;
+}
+
+.select-dropdown:focus {
+    outline: none;
+}
+
+button {
+    margin-right: 10px;
+    padding: 10px 20px;
+    background-color: #3498db;
+    color: #fff;
+    border-radius: 5px;
+    cursor: pointer;
+    border: none;
+}
+
+button:hover {
+    background-color: #2980b9;
+}
+
+.flex-center {
+    width: 100%;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
+  }
+  
+  .icon-3d {
+    padding: 10px;
+    color: #fff;
+  }
+  
+  .icon-3d:hover {
+    -webkit-animation: icon3d 200ms infinite;
+    animation: icon3d 200ms infinite;
+  }
+  
+  @keyframes icon3d {
+    0% {
+      text-shadow: 5px 4px #f44336, -5px -6px #2196f3;
+    }
+  
+    25% {
+      text-shadow: -5px -6px #f44336, 5px 4px #2196f3;
+    }
+  
+    50% {
+      text-shadow: 5px -4px #f44336, -8px 4px #2196f3;
+    }
+  
+    75% {
+      text-shadow: -8px -4px #f44336, -5px -4px #2196f3;
+    }
+  
+    100% {
+      text-shadow: -5px 0 #f44336, 5px -4px #2196f3;
+    }
+  }
