@@ -71,12 +71,15 @@ async function fetchData(endpoint, cacheKey) {
 
 window.onload = async function () {
     usageDisplay();
-    await fetchDataAndUpdateUI();
     $('header').hide();
+    await fetchDataAndUpdateUI();
 };
 
 async function fetchDataAndUpdateUI() {
     try {
+        const table = document.getElementById("table-to-populate");
+        const elem = document.getElementById("myBar");
+
         db = await openDB();
 
         const databaseDataResponse = await fetch("https://robloxhorrorlist.com/weights-database.json");
@@ -126,7 +129,7 @@ async function fetchDataAndUpdateUI() {
                   <td data-th="Creator" class="align-left">${JSON.parse(
                 JSON.stringify(gameDataFromAPI[i].creator)
             ).name}</td>
-                  <td data-th="Rating" class="align-left">${data.databaseData.games[i].ratings.rating}</td>
+                  <td data-th="Rating" class="align-left">${databaseData.games[i].ratings.rating}</td>
                   </tr>`;
 
             const rowElement = document.createElement('tr');
